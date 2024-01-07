@@ -17,10 +17,10 @@ app.post("/TodoTraverse", async (req, res) => {
             "INSERT INTO todo (description) VALUES($1) RETURNING *",
             [description]
         );
-
-        res.json(newTodo.rows[0]);
+        res.status(201).json(newTodo.rows[0]);
     } catch (err) {
         console.error(err.message);
+        res.status(500).send("Internal Server Error");
     }
 });
 
@@ -52,7 +52,7 @@ app.get("/TodoTraverse/:id", async (req, res) => {
 
 //update a todo
 
-app.put("/TodoTraverses/:id", async (req, res) => {
+app.put("/TodoTraverse/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const { description } = req.body;
